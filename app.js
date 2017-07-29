@@ -107,20 +107,20 @@ board.on('ready', function (err) {
     // nipplejs variable input events
     socket.on('steer', function (input) {
       if (input.direction === 'right') {
-        console.log('motor1:forward(' + input.force + ')');
+        //console.log('motor1:forward(' + input.force + ')');
         motor1.forward(input.force);
       } else {
-        console.log('motor1:reverse(' + input.force + ')');
+        //console.log('motor1:reverse(' + input.force + ')');
         motor1.reverse(input.force);
       }
     });
 
     socket.on('drive', function (input) {
       if (input.direction === 'forward') {
-        console.log('motor2:forward(' + input.force + ')');
+        //console.log('motor2:forward(' + input.force + ')');
         motor2.forward(input.force);
       } else {
-        console.log('motor2:reverse(' + input.force + ')');
+        //console.log('motor2:reverse(' + input.force + ')');
         motor2.reverse(input.force);
       }
     });
@@ -129,10 +129,10 @@ board.on('ready', function (err) {
       if (!motor) {
         stop();
       } else if (motor === 'leftMotor') {
-        console.log('motor1:stop');
+        //console.log('motor1:stop');
         motor1.stop();
       } else {
-        console.log('motor2:stop');
+        //console.log('motor2:stop');
         motor2.stop();
       }
     });
