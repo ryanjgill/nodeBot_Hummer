@@ -1,0 +1,28 @@
+{
+  "name": "nodebot_rock_crawler",
+  "version": "1.1.0",
+  "description": "NodeBot Rock Crawler. Replacing the internals of a New Bright RC car with a LinkIt 7688 microcontroller and controlling it using websockets.",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "node-sass": "^4.5.3"
+  },
+  "scripts": {
+    "sass": "node-sass public/stylesheets/style.scss --output public/stylesheets/",
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "NodeBot"
+  ],
+  "license": "MIT",
+  "author": "Ryan Gill",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanjgill/nodeBot_Rock_Crawler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ryanjgill/nodeBot_Rock_Crawler/issues"
+  },
+  "homepage": "https://github.com/ryanjgill/nodeBot_Rock_Crawler#readme"
+}
