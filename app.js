@@ -78,11 +78,11 @@ board.on('ready', function (err) {
   }
 
   function turnLeft(_speed) {
-    motor1.forward(_speed ? _speed : 255 * .9);
+    motor1.reverse(_speed ? _speed : 255 * .9);
   }
 
   function turnRight(_speed) {
-    motor1.reverse(_speed ? _speed : 255 * .9);
+    motor1.forward(_speed ? _speed : 255 * .9);
   }
 
   function stop() {
