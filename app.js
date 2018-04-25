@@ -1,38 +1,32 @@
 var express = require('express')
   , app = express()
-  , fs = require('fs')
-  , os = require('os')
+  , ip = require('ip')
   , path = require('path')
   , http = require('http').createServer(app)
   , socketIO = require('socket.io')(http)
   , five = require('johnny-five')
-  , eth0 = os.networkInterfaces().apcli0
-  , brLan = os.networkInterfaces()['br-lan']
-  , address = eth0 && eth0.length && eth0[0].address && eth0[0].address.indexOf('::') === -1
-      ? eth0[0].address
-      : brLan && brLan.length && brLan[0].address
-        ? brLan[0].address
-        : null
+  , Raspi = require('raspi-io')
+  , emitUserCount = require('./utils/emitUserCount')
+  , log = require('./utils/log')
+  , showLogs = false // enable to view logs
+  , address = ip.address()
   , PORT = 3030
   , board = new five.Board({
-      port: '/dev/ttyS0'
+      io: new Raspi(),
+      repl: false
     })
   ;
-
-function emitUserCount(socketIO) {
-  socketIO.sockets.emit('user:count', socketIO.engine.clientsCount);
-  console.log('Total users: ', socketIO.engine.clientsCount);
-}
 
 app.use(express.static(path.join(__dirname + '/public')));
 
 // index route
 app.get('/', function (req, res, next) {
-  res.sendFile(path.join(__dirname + '/public/index.html'))
-});
-// variable input controller route
-app.get('/controller', function (req, res, next) {
   res.sendFile(path.join(__dirname + '/public/controller.html'))
+});
+
+// variable input controller route
+app.get('/buttons', function (req, res, next) {
+  res.sendFile(path.join(__dirname + '/public/buttons.html'))
 });
 
 // board ready event
@@ -55,16 +49,16 @@ board.on('ready', function (err) {
   // steering 
   var motor1 = new five.Motor({
     pins: {
-      pwm: 3,
-      dir: 5
+      pwm: 'GPIO18',
+      dir: 'GPIO17'
     },
     invertPWM: true
   })
   // power
   , motor2 = new five.Motor({
     pins: {
-      pwm: 9,
-      dir: 10
+      pwm: 'GPIO13',
+      dir: 'GPIO12'
     },
     invertPWM: true
   });
@@ -96,31 +90,29 @@ board.on('ready', function (err) {
 
     emitUserCount(socketIO);
 
+    // old button style events
     socket.on('forward', forward);
-
     socket.on('reverse', reverse);
-
     socket.on('turnLeft', turnLeft);
-
     socket.on('turnRight', turnRight);
 
     // nipplejs variable input events
     socket.on('steer', function (input) {
       if (input.direction === 'right') {
-        //console.log('motor1:forward(' + input.force + ')');
+        log('motor1:forward(' + input.force + ')', showLogs);
         motor1.forward(input.force);
       } else {
-        //console.log('motor1:reverse(' + input.force + ')');
+        log('motor1:reverse(' + input.force + ')', showLogs);
         motor1.reverse(input.force);
       }
     });
 
     socket.on('drive', function (input) {
       if (input.direction === 'forward') {
-        //console.log('motor2:forward(' + input.force + ')');
+        log('motor2:forward(' + input.force + ')', showLogs);
         motor2.forward(input.force);
       } else {
-        //console.log('motor2:reverse(' + input.force + ')');
+        log('motor2:reverse(' + input.force + ')', showLogs);
         motor2.reverse(input.force);
       }
     });
@@ -129,10 +121,10 @@ board.on('ready', function (err) {
       if (!motor) {
         stop();
       } else if (motor === 'leftMotor') {
-        //console.log('motor1:stop');
+        log('motor1:stop', showLogs);
         motor1.stop();
       } else {
-        //console.log('motor2:stop');
+        log('motor2:stop', showLogs);
         motor2.stop();
       }
     });

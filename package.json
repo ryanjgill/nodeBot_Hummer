@@ -3,7 +3,13 @@
   "version": "1.1.0",
   "description": "NodeBot Rock Crawler. Replacing the internals of a New Bright RC car with a LinkIt 7688 microcontroller and controlling it using websockets.",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.16.3",
+    "ip": "^1.1.5",
+    "johnny-five": "^0.14.3",
+    "raspi-io": "^9.0.0",
+    "socket.io": "^2.1.0"
+  },
   "devDependencies": {
     "node-sass": "^4.5.3"
   },
