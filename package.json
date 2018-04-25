@@ -15,7 +15,7 @@
   },
   "scripts": {
     "sass": "node-sass public/stylesheets/style.scss --output public/stylesheets/",
-    "start": "node app.js",
+    "start": "sudo node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
