@@ -1,4 +1,4 @@
-# NodeBot Rock Crawler
+# NodeBot Hummer
 Using a LinkIt 7688 Duo to replace the internals of the new bright rc car and control it using websockets.
 
 ## This will use 2 PWM pins and 2 digital pins on the Raspberry Pi Zero W to control 2 dc motors. 
