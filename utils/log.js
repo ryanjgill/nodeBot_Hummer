@@ -1,4 +1,4 @@
-export default (message, showLogs) => {
+module.exports = (message, showLogs) => {
   if (!showLogs) { return }
   console.log(message)
 }

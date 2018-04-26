@@ -99,10 +99,10 @@ board.on('ready', function (err) {
     // nipplejs variable input events
     socket.on('steer', function (input) {
       if (input.direction === 'right') {
-        log('motor1:forward(' + input.force + ')', showLogs);
+        log('motor1:right(' + input.force + ')', showLogs);
         motor1.forward(input.force);
       } else {
-        log('motor1:reverse(' + input.force + ')', showLogs);
+        log('motor1:left(' + input.force + ')', showLogs);
         motor1.reverse(input.force);
       }
     });
